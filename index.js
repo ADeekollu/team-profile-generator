@@ -3,13 +3,14 @@ const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 const inquirer = require("inquirer");
 const fs = require("fs");
+const generateHtml = require("./src/template")
 const { default: Choices } = require("inquirer/lib/objects/choices");
 
 const employeeArray = []
 
 function fireApp() {
 
-    function addEmp(){
+    function addEmployee(){
         inquirer.prompt([{
             type : "list",
             name : "employeePrompt",
@@ -65,7 +66,7 @@ function addManager() {
      ]).then(response => {
             const manager = new Manager(respose.managerName,response.managerId,response.managerEmail, response.managerOfficeNumber)
             employeeArray.push(manager)
-            addEmp()
+            addEmployee()
         });
 
 }
@@ -94,9 +95,9 @@ function addEngineer() {
         },
         
      ]).then(response => {
-            const manager = new Manager(respose.engineerName, response.engineerId, response.engineerEmail, response.engineerGithub)
+            const manager = new Engineer(respose.engineerName, response.engineerId, response.engineerEmail, response.engineerGithub)
             employeeArray.push(engineer)
-            addEmp()
+            addEmployee()
         });
         
 }
@@ -128,18 +129,28 @@ function addIntern() {
      ]).then(response => {
             const manager = new Manager(respose.internName, response.internId, response.internEmail, response.internSchool)
             employeeArray.push(intern)
-            addEmp()
+            addEmployee()
         });
         
 }
 
 
 
-function htmlBuild () {
-    console.log("Your team has been built!")
-    
-    fs.writeFile("index.html", employeeArray, "utf-8" )
-}
+function htmlBuild(fileName, data) {
+    return inquirer.prompt() 
+        .then((data) => {
+            const html = generateHtml(data); 
+
+            fs.writeFile('./dist/index.html', html, function(err) {
+                if (err) {
+                    console.log("Could not save file", err)
+                } else {
+                    console.log("New HTML generated")
+                }
+            })
+        })
+ }
 
 fireApp();
-addEmp();
+addEmployee();
+htmlBuild();

@@ -1,0 +1,7 @@
+
+const generateTeam = () => {
+    
+    return``
+
+  
+}
