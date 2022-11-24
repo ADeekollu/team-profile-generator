@@ -4,11 +4,11 @@ const Manager = require("./lib/Manager");
 const inquirer = require("inquirer");
 const fs = require("fs");
 const generateHtml = require("./src/template")
-const { default: Choices } = require("inquirer/lib/objects/choices");
+
 
 const employeeArray = []
 
-function fireApp() {
+
 
     function addEmployee(){
         inquirer.prompt([{
@@ -17,7 +17,7 @@ function fireApp() {
             message: "What type of employee would you like to add?",
             choices: ["Manager", "Engineer", "Intern", "No more employees needed"]
         }]).then(function(userInput) {
-            switch(userInput.employeePromt) {
+            switch(userInput.employeePrompt) {
                 case "Manager":
                     addManager();
                     break;
@@ -29,15 +29,15 @@ function fireApp() {
                     break;
 
                 default:
-                    htmlBuild();
+                    writeHtml();
 
             }            
 
-        })       
+        })
 
-    }
+    };
 
-}
+
 
 
 function addManager() {
@@ -64,7 +64,7 @@ function addManager() {
         },
         
      ]).then(response => {
-            const manager = new Manager(respose.managerName,response.managerId,response.managerEmail, response.managerOfficeNumber)
+            const manager = new Manager(response.managerName, response.managerId, response.managerEmail, response.managerOfficeNumber)
             employeeArray.push(manager)
             addEmployee()
         });
@@ -95,7 +95,7 @@ function addEngineer() {
         },
         
      ]).then(response => {
-            const manager = new Engineer(respose.engineerName, response.engineerId, response.engineerEmail, response.engineerGithub)
+            const engineer = new Engineer(response.engineerName, response.engineerId, response.engineerEmail, response.engineerGithub)
             employeeArray.push(engineer)
             addEmployee()
         });
@@ -127,30 +127,20 @@ function addIntern() {
         },
         
      ]).then(response => {
-            const manager = new Manager(respose.internName, response.internId, response.internEmail, response.internSchool)
+            const intern = new Intern(response.internName, response.internId, response.internEmail, response.internSchool)
             employeeArray.push(intern)
             addEmployee()
         });
         
 }
 
+function writeHtml(){
+    console.log(employeeArray)
+fs.writeFile('./dist/index.html', generateHtml(employeeArray), (err) =>
+  err ? console.error(err) : console.log('Success!')
+);
+}
 
 
-function htmlBuild(fileName, data) {
-    return inquirer.prompt() 
-        .then((data) => {
-            const html = generateHtml(data); 
-
-            fs.writeFile('./dist/index.html', html, function(err) {
-                if (err) {
-                    console.log("Could not save file", err)
-                } else {
-                    console.log("New HTML generated")
-                }
-            })
-        })
- }
-
-fireApp();
 addEmployee();
-htmlBuild();
+
