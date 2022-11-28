@@ -137,7 +137,7 @@ function addIntern() {
 function writeHtml(){
     console.log(employeeArray)
 fs.writeFile('./dist/index.html', generateHtml(employeeArray), (err) =>
-  err ? console.error(err) : console.log('Success!')
+  err ? console.error(err) : console.log('Success Team Generated!')
 );
 }
 
