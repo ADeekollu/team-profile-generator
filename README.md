@@ -30,6 +30,8 @@ N/A
 Licensed with the [MIT](https://choosealicense.com/licenses/mit/) license
 
 ## Contact
-If you have questions contact me here ankithdeekollu@gmail.com
-github.com/ADeekollu
+If you have questions contact me here ankithdeekollu@gmail.com, github.com/ADeekollu
+
+## Link to Walkthrough Video
+https://drive.google.com/file/d/1KGWzQ-tShJeCydoI-0o_HEa5V-SUNU28/view
 
